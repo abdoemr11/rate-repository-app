@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native"
 import Text from "./Text"
-import { formatNumber } from "../utlis"
+import { formatNumber } from "../utils/formateNumber"
 
 const styles = StyleSheet.create({
     container: {
