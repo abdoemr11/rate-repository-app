@@ -8,6 +8,7 @@ import SignIn from './components/SignIn';
 
 const styles = StyleSheet.create({
   container: {
+    fontFamily: theme.fonts.main,
     marginTop: Constants.statusBarHeight,
     flexGrow: 1,
     flexShrink: 1,
