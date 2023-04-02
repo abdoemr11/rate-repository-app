@@ -62,10 +62,11 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryList = () => {
-  const {repositories} = useRepositories();
-  const repositoryNodes = repositories
+  const {repositories, loading} = useRepositories();
+  const repositoryNodes = !loading
   ? repositories.edges.map(edge => edge.node)
   : [];
+  console.log(repositories, loading);
   return (
     <FlatList
       style={styles.list}

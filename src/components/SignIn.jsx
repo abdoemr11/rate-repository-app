@@ -5,6 +5,8 @@ import FormikTextInput from './FormikTextInput';
 import Text from './Text';
 import TextInput from './TextInput';
 import * as yup from 'yup'
+import useSignIn from '../hooks/useSignIn';
+import AuthStorage from '../utils/authStorage';
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -32,9 +34,21 @@ const styles = StyleSheet.create({
   }
 })
 const SignIn = () => {
-
-  const handleLogIn = (values) => {
+  const [signIn, result] = useSignIn();
+  const handleLogIn = async(values) => {
     console.log(values);
+    const { username, password } = values;
+
+    try {
+      const { data } = await signIn({ username, password });
+      console.log(data);
+      if (data) {
+        const authStorage = new AuthStorage('userOne');
+        authStorage.setAccessToken(data.authenticate.accessToken)
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
   return (
       <Formik 
