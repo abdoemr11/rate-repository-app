@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, View, StyleSheet, ActivityIndicator } from 'react-native';
 import useRepositories from '../hooks/useRepositories';
 import theme from '../theme';
 import RepositoryItem from './RepositoryItem';
@@ -68,12 +68,19 @@ const RepositoryList = () => {
   : [];
   console.log(repositories, loading);
   return (
-    <FlatList
-      style={styles.list}
-      data={repositoryNodes}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={({item}) => <RepositoryItem repository={item}/>}
-    />
+    <View>
+      {
+        loading?
+        <ActivityIndicator size="large" color="#0000ff" />
+        : <FlatList
+        style={styles.list}
+        data={repositoryNodes}
+        ItemSeparatorComponent={ItemSeparator}
+        renderItem={({item}) => <RepositoryItem repository={item}/>}
+      />
+      }
+    </View>
+
   );
 };
 

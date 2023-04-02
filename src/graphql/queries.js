@@ -22,3 +22,13 @@ query Repositories {
   
   
 `
+
+export const GET_USER = gql`
+
+{
+  me {
+    id
+    username
+  }
+}
+`
