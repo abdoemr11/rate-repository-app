@@ -43,12 +43,43 @@ const styles = StyleSheet.create({
     color: theme.colors.error
   }
 })
+export const SignInContainer = ({handleLogIn, logging, error}) => {
+  return(
+    <Formik 
+    initialValues={{username: "", password: ""}}
+    onSubmit={handleLogIn}
+    validationSchema = {validationSchema}
+  >
+   {(props)=> {
+    return(
+      <View style={styles.container}>
+        <FormikTextInput name="username" placeholder="Username" />
+        <FormikTextInput secureTextEntry name="password" placeholder="Password" />
+        <Pressable onPress={props.handleSubmit} 
+          disabled={logging}
+          style={[
+            styles.button,
+            logging && styles.disabledButton,
+          ]}
+        >
+          <Text style={styles.button}>
+          {logging? "Signing...": "Sign In"}
+          </Text>
+          </Pressable>
+        {error&&<Text style={styles.errorText}>{error}</Text> }
+
+      </View>
+    )
+   }}
+  </Formik>
+  )
+}
 const SignIn = () => {
   const [signIn, logging] = useSignIn();
   const [error, setError] = useState('');
   const navigate = useNavigate()
   const handleLogIn = async(values) => {
-    // console.log(values);
+    console.log('signing in ....');
     const { username, password } = values;
     try {
       const { data } = await signIn({ username, password });
@@ -66,33 +97,7 @@ const SignIn = () => {
     } 
   }
   return (
-      <Formik 
-        initialValues={{username: "", password: ""}}
-        onSubmit={handleLogIn}
-        validationSchema = {validationSchema}
-      >
-       {(props)=> {
-        return(
-          <View style={styles.container}>
-            <FormikTextInput name="username" placeholder="Username" />
-            <FormikTextInput secureTextEntry name="password" placeholder="Password" />
-            <Pressable onPress={props.handleSubmit} 
-              disabled={logging}
-              style={[
-                styles.button,
-                logging && styles.disabledButton,
-              ]}
-            >
-              <Text style={styles.button}>
-              {logging? "Signing...": "Sign In"}
-              </Text>
-              </Pressable>
-            {error&&<Text style={styles.errorText}>{error}</Text> }
-
-          </View>
-        )
-       }}
-      </Formik>
+    <SignInContainer handleLogIn={handleLogIn} logging={logging} error={error}/>
   );
 };
 
