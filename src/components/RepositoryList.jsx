@@ -61,6 +61,20 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
+export const RepositoryListContainer = ({ repositories }) => {
+  const repositoryNodes = repositories
+    ? repositories.edges.map((edge) => edge.node)
+    : [];
+
+  return (
+    <FlatList
+            style={styles.list}
+            data={repositoryNodes}
+            ItemSeparatorComponent={ItemSeparator}
+            renderItem={({item}) => <RepositoryItem repository={item}/>}
+    />
+  );
+};
 const RepositoryList = () => {
   const {repositories, loading} = useRepositories();
   const repositoryNodes = !loading
@@ -72,12 +86,7 @@ const RepositoryList = () => {
       {
         loading?
         <ActivityIndicator size="large" color="#0000ff" />
-        : <FlatList
-        style={styles.list}
-        data={repositoryNodes}
-        ItemSeparatorComponent={ItemSeparator}
-        renderItem={({item}) => <RepositoryItem repository={item}/>}
-      />
+        : <RepositoryListContainer repositories={repositoryNodes}/>
       }
     </View>
 
