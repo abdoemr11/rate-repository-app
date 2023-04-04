@@ -4,16 +4,9 @@ import useRepositories from '../hooks/useRepositories';
 import theme from '../theme';
 import RepositoryItem from './RepositoryItem';
 import { useNavigate } from 'react-router-native';
+import ItemSeparator from './ItemSeprator';
 
-const styles = StyleSheet.create({
-  separator: {
-    height: 20,
-  },
-  list: {
-  }
-});
 
-const ItemSeparator = () => <View style={styles.separator} />;
 
 export const RepositoryListContainer = ({ repositories }) => {
   const navigate = useNavigate();
@@ -23,7 +16,6 @@ export const RepositoryListContainer = ({ repositories }) => {
   }
   return (
     <FlatList
-            style={styles.list}
             data={repositories}
             ItemSeparatorComponent={ItemSeparator}
             renderItem={({item}) => <Pressable onPress={()=> navigateToSingleRepo(item.id)}> 
